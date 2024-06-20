@@ -13,6 +13,9 @@ class Main{
             int y = Integer.parseInt(st.nextToken());
             long result = 1;
             
+            if(y/2 < x) {
+                x = y - x;
+            }
             for(int i = 0; i < x; i++) {
                 result *= (y-i);
                 result /= (i+1);
