@@ -26,14 +26,14 @@ class Main{
         int i = 1;
         double reminder;
         // 두 점 사이의 거리의 절반에 도달 할 때까지 i값을 1씩 증가시키면서 합계에 더함
-        while((double)(sum + i) < halfDistance) {
+        while(sum + i < halfDistance) {
             sum += i;
             i += 1;
         }
         reminder = halfDistance - sum;
         if(reminder == i) {
             System.out.println(i * 2);
-        } else if(i >= (int)(reminder * 2)) {
+        } else if(i >= reminder * 2) {
             System.out.println((i - 1) * 2 + 1);
         } else {
             System.out.println((i - 1) * 2 + 2);
