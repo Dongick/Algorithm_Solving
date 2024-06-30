@@ -25,8 +25,10 @@ class Main{
     }
     
     static void function() {
-        for(int i = 2; i < maxNum; i++) {
-            for(int j = i*2; j < maxNum; j += i) {
+        for(int i = 2; i <= Math.sqrt(maxNum); i++) {
+            if(arr[i])
+                continue;
+            for(int j = i*i; j < maxNum; j += i) {
                 if(!arr[j])
                     arr[j] = true;
             }
