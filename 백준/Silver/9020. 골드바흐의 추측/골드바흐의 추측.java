@@ -11,20 +11,16 @@ class Main{
         while(T-- > 0) {
             boolean check = false;
             int n = Integer.parseInt(br.readLine());
-            for(int i = n/2; i >= 2; i--) {
-                if(arr[i])
-                    continue;
-                for(int j = i; j < n; j++) {
-                    if(arr[j])
-                        continue;
-                    if(i + j == n) {
-                        sb.append(i).append(" ").append(j).append("\n");
-                        check = true;
-                        break;
-                    }
-                }
-                if(check)
+            int num1 = n/2;
+            int num2 = n/2;
+            while(true) {
+                if(arr[num1] || arr[num2]) {
+                    num1--;
+                    num2++;
+                } else {
+                    sb.append(num1).append(" ").append(num2).append("\n");
                     break;
+                }
             }
         }
         System.out.println(sb);
