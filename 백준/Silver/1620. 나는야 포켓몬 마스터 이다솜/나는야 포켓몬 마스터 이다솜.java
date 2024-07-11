@@ -17,10 +17,9 @@ class Main {
         }
         for(int i = 0; i < m; i++) {
             String s = br.readLine();
-            try{
-                int num = Integer.parseInt(s);
-                sb.append(hashMap2.get(num)).append("\n");
-            } catch(Exception e) {
+            if(49 <= s.charAt(0) && 57 >= s.charAt(0)) {
+                sb.append(hashMap2.get(Integer.parseInt(s))).append("\n");
+            } else {
                 sb.append(hashMap.get(s)).append("\n");
             }
         }
