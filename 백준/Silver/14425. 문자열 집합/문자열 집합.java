@@ -7,18 +7,13 @@ class Main {
         StringTokenizer st = new StringTokenizer(br.readLine());
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
-        String[] arr = new String[n];
+        HashMap<String, Integer> hashMap = new HashMap<>();
         for(int i = 0; i < n; i++) 
-            arr[i] = br.readLine();
+            hashMap.put(br.readLine(), 0);
         int count = 0;
         for(int i = 0; i < m; i++) {
-            String s = br.readLine();
-            for(int j = 0; j < n; j++) {
-                if(arr[j].equals(s)) {
-                    count++;
-                    break;
-                }
-            }
+            if(hashMap.containsKey(br.readLine()))
+                count++;
         }
         System.out.println(count);
     }
