@@ -13,13 +13,15 @@ class Main {
             hashSet.add(Integer.parseInt(st.nextToken()));
         }
         st = new StringTokenizer(br.readLine());
+        int duplicateCount = 0;
+        int count = 0;
         for(int i = 0; i < m; i++) {
             int num = Integer.parseInt(st.nextToken());
             if(hashSet.contains(num))
-                hashSet.remove(num);
+                duplicateCount++;
             else
-                hashSet.add(num);
+                count++;
         }
-        System.out.println(hashSet.size());
+        System.out.println(hashSet.size() - duplicateCount + count);
     }
 }
