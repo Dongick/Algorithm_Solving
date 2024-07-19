@@ -4,7 +4,6 @@ import java.io.*;
 class Main {
     static int[] arr;
     static int[] operator = new int[5];
-    static int[] order;
     static int n;
     static int max = Integer.MIN_VALUE;
     static int min = Integer.MAX_VALUE;
@@ -18,46 +17,35 @@ class Main {
         for(int i = 0; i < n; i++) {
             arr[i] = Integer.parseInt(st.nextToken());
         }
-        order = new int[n - 1];
         st = new StringTokenizer(br.readLine());
         for(int i = 1; i <= 4; i++) {
             operator[i] = Integer.parseInt(st.nextToken());
         }
         
-        func(0);
+        func(0, arr[0]);
         sb.append(max).append("\n").append(min);
         System.out.println(sb);
     }
 
-    static void func(int num) {
+    static void func(int num, int sum) {
         if(num == n - 1) {
-            calc();
+            if(sum >= max)
+                max = sum;
+            if(sum <= min)
+                min = sum;
             return;
         }
         
         for(int i = 1; i <= 4; i++) {
             if(operator[i] > 0) {
                 operator[i]--;
-                order[num] = i;
-                func(num + 1);
-                order[num] = 0;
+                func(num + 1, calc(sum, i, arr[num + 1]));
                 operator[i]++;
             }
         }
     }
 
-    static void calc() {
-        int num = arr[0];
-        for(int i = 0; i < n - 1; i++) {
-            num = operator(num, order[i], arr[i+1]);
-        }
-        if(num >= max)
-            max = num;
-        if(num <= min)
-            min = num;
-    }
-
-    static int operator(int x, int ope, int y) {
+    static int calc(int x, int ope, int y) {
         int num = x;
         switch (ope) {
             case 1:
