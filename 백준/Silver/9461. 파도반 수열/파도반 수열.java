@@ -2,23 +2,16 @@ import java.util.*;
 import java.io.*;
 
 class Main {
-    static long[] arr;
+    static long[] arr = new long[101];
     
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
         int T = Integer.parseInt(br.readLine());
         while(T-- > 0) {
+            dp(100);
             int n = Integer.parseInt(br.readLine());
-            if(n <= 3)
-                sb.append(1).append("\n");
-            else if(n <= 5)
-                sb.append(2).append("\n");
-            else {
-                arr = new long[n+1];
-                dp(n);
-                sb.append(arr[n]).append("\n");
-            }
+            sb.append(arr[n]).append("\n");
         }
         System.out.println(sb);
     }
