@@ -3,16 +3,13 @@ import java.io.*;
 
 class Main {
     static int count = 0;
-    static int[] arr;
     
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
         int n = Integer.parseInt(br.readLine());
-        arr = new int[n+1];
         fib(n);
-        sb.append(count).append(" ");
-        sb.append(n-2);
+        sb.append(count).append(" ").append(n-2);
         System.out.println(sb);
     }
 
