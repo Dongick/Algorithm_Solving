@@ -13,18 +13,17 @@ class Main {
         n = Integer.parseInt(st.nextToken());
         k = Integer.parseInt(st.nextToken());
         arr = new int[n];
-        int sum[] = new int[n-k+1];
+        int sum[] = new int[n+1];
         st = new StringTokenizer(br.readLine());
         for(int i = 0; i < n; i++) {
             arr[i] = Integer.parseInt(st.nextToken());
+            sum[i+1] = sum[i] + arr[i];
         }
-        for(int i = 0; i < sum.length; i++) {
-            for(int j = i; j < i + k; j++) {
-                sum[i] += arr[j];
-            }
+        int result = Integer.MIN_VALUE;
+        for(int i = 0; i <= n-k; i++) {
+            result = Math.max(sum[i+k] - sum[i], result);
         }
-        Arrays.sort(sum);
-        sb.append(sum[n-k]);
+        sb.append(result);
         System.out.println(sb);
     }
 }
