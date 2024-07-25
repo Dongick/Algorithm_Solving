@@ -14,24 +14,19 @@ class Main {
         st = new StringTokenizer(br.readLine());
         for(int i = 0; i < n; i++)
             price[i] = Integer.parseInt(st.nextToken());
-        List<int[]> list = new ArrayList<>();
-        int sum = 0;
-        int min = Integer.MAX_VALUE;
-        for(int i = n-2; i >= 0; i--) {
-            if(min >= price[i]) {
-                min = price[i];
+        long sum = road[0];
+        int min = price[0];
+        long result = 0;
+        for(int i = 1; i < n-1; i++) {
+            if(min <= price[i]) {
                 sum += road[i];
             } else {
-                list.add(new int[] {min, sum});
+                result += min * sum;
                 min = price[i];
                 sum = road[i];
             }
         }
-        list.add(new int[] {min, sum});
-        int result = 0;
-        for(int[] arr : list) {
-            result += arr[0] * arr[1];
-        }
+        result += min * sum;
         sb.append(result);
         System.out.println(sb);
     }
