@@ -3,7 +3,6 @@ import java.io.*;
 
 class Main {
     static int[] arr;
-    static int[] arr2;
     static int n, m;
     static boolean[] dp = new boolean[40001];
     
@@ -15,12 +14,7 @@ class Main {
         StringTokenizer st = new StringTokenizer(br.readLine());
         for(int i = 0; i < n; i++)
             arr[i] = Integer.parseInt(st.nextToken());
-        
         m = Integer.parseInt(br.readLine());
-        arr2 = new int[m];
-        st = new StringTokenizer(br.readLine());
-        for(int i = 0; i < m; i++)
-            arr2[i] = Integer.parseInt(st.nextToken());
         
         for(int i = 0; i < n; i++) {
             if(!dp[arr[i]]) {
@@ -28,19 +22,20 @@ class Main {
                 dfs(i+1, arr[i]);
             }
         }
+        
+        st = new StringTokenizer(br.readLine());
         for(int i = 0; i < m; i++) {
-            boolean check = false;
-            if(dp[arr2[i]]) {
+            int num = Integer.parseInt(st.nextToken());
+            if(dp[num]) {
                 sb.append("Y").append(" ");
-                check = true;
+                continue;
             }
-            else {
-                for(int j = 1; j + arr2[i] <= 40000; j++) {
-                    if(dp[j] && dp[j + arr2[i]]) {
-                        sb.append("Y").append(" ");
-                        check = true;
-                        break;
-                    }
+            boolean check = false;
+            for(int j = 1; j + num <= 40000; j++) {
+                if(dp[j] && dp[j + num]) {
+                    sb.append("Y").append(" ");
+                    check = true;
+                    break;
                 }
             }
             if(!check)
