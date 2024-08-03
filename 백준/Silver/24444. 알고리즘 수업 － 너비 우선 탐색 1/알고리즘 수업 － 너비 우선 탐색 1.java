@@ -27,7 +27,7 @@ class Main {
         }
         for(int i = 1; i <= n; i++)
             Collections.sort(list.get(i));
-        dfs(r);
+        bfs(r);
 
         for(int i = 1; i <= n; i++) {
             sb.append(result[i]).append("\n");
@@ -35,7 +35,7 @@ class Main {
         System.out.println(sb);
     }
 
-    static void dfs(int start) {
+    static void bfs(int start) {
         Queue<Integer> queue = new LinkedList<>();
         queue.offer(start);
         result[start] = count;
