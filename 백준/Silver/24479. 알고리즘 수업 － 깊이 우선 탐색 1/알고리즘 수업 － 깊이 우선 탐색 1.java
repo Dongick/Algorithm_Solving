@@ -37,8 +37,7 @@ class Main {
 
     static void dfs(int num) {
         result[num] = count;
-        for(int i = 0; i < list.get(num).size(); i++) {
-            int number = list.get(num).get(i);
+        for(int number : list.get(num)) {
             if(result[number] == 0) {
                 count += 1;
                 dfs(number);
