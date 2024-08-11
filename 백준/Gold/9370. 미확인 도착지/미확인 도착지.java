@@ -20,7 +20,7 @@ class Main {
     static List<List<Node>> list;
     static int[] dist;
     static int n;
-    final static int INF =  50000 * 1000;
+    final static int INF =  50000 * 1000 * 2;
     
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -44,31 +44,31 @@ class Main {
                 st = new StringTokenizer(br.readLine());
                 int a = Integer.parseInt(st.nextToken());
                 int b = Integer.parseInt(st.nextToken());
-                int d = Integer.parseInt(st.nextToken());
+                int d = Integer.parseInt(st.nextToken()) * 2;
+                if((a == g && b == h) || (a == h && b == g))
+                    d--;
 
                 list.get(a).add(new Node(b, d));
                 list.get(b).add(new Node(a, d));
             }
-            List<Integer> result = new ArrayList<>();
+            int[] destination = new int[t];
             dist = new int[n+1];
             
             for(int i = 0; i < t; i++) {
-                int x = Integer.parseInt(br.readLine());
-                int shortPass1 = bfs(s, x);
-                int shortPass2 = Math.min(bfs(s, g) + bfs(g, h) + bfs(h, x), bfs(s, h) + bfs(h, g) + bfs(g, x));
-                if(shortPass1 == shortPass2)
-                    result.add(x);
+                destination[i] = Integer.parseInt(br.readLine());
             }
-            Collections.sort(result);
-
-            for(int i : result)
-                sb.append(i).append(" ");
+            Arrays.sort(destination);
+            bfs(s);
+            for(int i : destination) {
+                if(dist[i] % 2 == 1)
+                    sb.append(i).append(" ");
+            }
             sb.append("\n");
         }
         System.out.println(sb);
     }
 
-    static int bfs(int start, int end) {
+    static void bfs(int start) {
         Queue<Node> queue = new PriorityQueue<>();
         boolean[] check = new boolean[n+1];
         for(int i = 1; i <= n; i++)
@@ -89,6 +89,5 @@ class Main {
                     
             }
         }
-        return dist[end];
     }
 }
