@@ -3,7 +3,7 @@ import java.io.*;
 
 class Main {
     static int[] trace;
-    static int[] arr;
+    static char[] traceDSLR;
     
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -14,26 +14,16 @@ class Main {
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
             trace = new int[10000];
-            arr = new int[10000];
-            for(int i = 0; i < 10000; i++)
-                arr[i] = 10000;
+            traceDSLR = new char[10000];
             
             int count = bfs(a, b);
             
             char[] result = new char[count];
             int num = b;
             while(count > 0) {
-                int temp = trace[num];
-                if(DSLR('D', temp) == num)
-                    result[count-1] = 'D';
-                else if(DSLR('S', temp) == num)
-                    result[count-1] = 'S';
-                else if(DSLR('L', temp) == num)
-                    result[count-1] = 'L';
-                else
-                    result[count-1] = 'R';
+                result[count-1] = traceDSLR[num];
+                num = trace[num];
                 count--;
-                num = temp;
             }
             for(char alpa : result)
                 sb.append(alpa);
@@ -47,41 +37,48 @@ class Main {
         Queue<Integer> queue = new LinkedList<>();
         queue.offer(a);
         boolean[] check = new boolean[10000];
-        arr[a] = 0;
-
+        check[a] = true;
+        int count = 1;
+        
         while(!queue.isEmpty()) {
-            int num = queue.poll();
-
-            if(check[num])
-                continue;
-            check[num] = true;
-
-            int D = DSLR('D', num);
-            int S = DSLR('S', num);
-            int L = DSLR('L', num);
-            int R = DSLR('R', num);
-            if(!check[D] && arr[D] > arr[num] + 1) {
-                arr[D] = arr[num] + 1;
-                trace[D] = num;
-                queue.offer(D);
+            int size = queue.size();
+            while(size-- > 0) {
+                int num = queue.poll();
+        
+                int D = DSLR('D', num);
+                int S = DSLR('S', num);
+                int L = DSLR('L', num);
+                int R = DSLR('R', num);
+                if(!check[D]) {
+                    trace[D] = num;
+                    traceDSLR[D] = 'D';
+                    queue.offer(D);
+                    check[D] = true;
+                }
+                if(!check[S]) {
+                    trace[S] = num;
+                    traceDSLR[S] = 'S';
+                    queue.offer(S);
+                    check[S] = true;
+                }
+                if(!check[L]) {
+                    trace[L] = num;
+                    traceDSLR[L] = 'L';
+                    queue.offer(L);
+                    check[L] = true;
+                }
+                if(!check[R]) {
+                    trace[R] = num;
+                    traceDSLR[R] = 'R';
+                    queue.offer(R);
+                    check[R] = true;
+                }
+                if(D == b || S == b || L == b || R == b)
+                    return count;
             }
-            if(!check[S] && arr[S] > arr[num] + 1) {
-                arr[S] = arr[num] + 1;
-                trace[S] = num;
-                queue.offer(S);
-            }
-            if(!check[L] && arr[L] > arr[num] + 1) {
-                arr[L] = arr[num] + 1;
-                trace[L] = num;
-                queue.offer(L);
-            }
-            if(!check[R] && arr[R] > arr[num] + 1) {
-                arr[R] = arr[num] + 1;
-                trace[R] = num;
-                queue.offer(R);
-            }
+            count++;
         }
-        return arr[b];
+        return count;
     }
 
     static int DSLR(char command, int num) {
@@ -93,22 +90,14 @@ class Main {
             return (num == 0) ? 9999 : num - 1;
         }
         else if(command == 'L') {
-            int d1 = num / 1000;
+            int n = num / 1000;
             num %= 1000;
-            int d2 = num / 100;
-            num %= 100;
-            int d3 = num / 10;
-            int d4 = num % 10;
-            return d2 * 1000 + d3 * 100 + d4 * 10 + d1;
+            return num * 10 + n;
         }
         else {
-            int d1 = num / 1000;
-            num %= 1000;
-            int d2 = num / 100;
-            num %= 100;
-            int d3 = num / 10;
-            int d4 = num % 10;
-            return d4 * 1000 + d1 * 100 + d2 * 10 + d3;
+            int n = num % 10;
+            num = num / 10;
+            return n * 1000 + num;
         }
     }
 }
