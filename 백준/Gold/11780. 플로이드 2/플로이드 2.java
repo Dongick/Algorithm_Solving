@@ -39,19 +39,12 @@ class Main {
                     if(k == j || i == j) continue;
                     if(arr[i][j] > arr[i][k] + arr[k][j]) {
                         arr[i][j] = arr[i][k] + arr[k][j];
-                        int x = i;
-                        int y = k;
-                        while(true) {
-                            int num = trace[x][y];
-                            if(num == y)
-                                break;
-                            y = num;
-                        }
-                        trace[i][j] = y;
+                        trace[i][j] = trace[i][k];
                     }
                 }
             }
         }
+        
         for(int i = 1; i <= n; i++) {
             for(int j = 1; j <= n; j++) {
                 if(arr[i][j] == INF)
@@ -61,6 +54,7 @@ class Main {
             }
             sb.append("\n");
         }
+        
         for(int i = 1; i <= n; i++) {
             for(int j = 1; j <= n; j++) {
                 if(i == j || trace[i][j] == 0) {
