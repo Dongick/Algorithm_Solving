@@ -3,6 +3,8 @@ import java.io.*;
 
 class Main {
     static int[][] R;
+    static int[] arr;
+    static boolean[] check;
     static int n;
     static int result = 0;
     static int num;
@@ -12,7 +14,7 @@ class Main {
         StringBuilder sb = new StringBuilder();
         n = Integer.parseInt(br.readLine());
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int[] arr = new int[n];
+        arr = new int[n];
         for(int i = 0; i < n; i++) {
             arr[i] = Integer.parseInt(st.nextToken());
         }
@@ -23,15 +25,14 @@ class Main {
                 R[i][j] = Integer.parseInt(st.nextToken());
         }
         num = Integer.parseInt(br.readLine());
-        
-        func(0, n, arr, new boolean[n]);
+        check = new boolean[n];
+        func(0, n);
 
         sb.append(result);
-        
         System.out.println(sb);
     }
 
-    static void func(int count, int number, int[] arr, boolean[] check) {
+    static void func(int count, int number) {
         if(check[num] || number == 1) {
             result = Math.max(result, count);
             return;
@@ -47,7 +48,7 @@ class Main {
                 }
             }
             check[idx] = true;
-            func(count, number-1, arr, check);
+            func(count, number-1);
             check[idx] = false;
         } else {
             for(int i = 0; i < n; i++) {
@@ -56,11 +57,13 @@ class Main {
                     for(int j = 0; j < n; j++) {
                         arr[j] += R[i][j];
                     }
-                    func(count+1, number-1, arr, check);
-                    check[i] = false;
+                    
+                    func(count+1, number-1);
+
                     for(int j = 0; j < n; j++) {
                         arr[j] -= R[i][j];
                     }
+                    check[i] = false;
                 }
             }
         }
