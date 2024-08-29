@@ -28,9 +28,10 @@ class Main {
         int result = 0;
         int count = 0;
         boolean[] check = new boolean[m];
+        int minCrane = 0;
         while(count < m) {
             int idx = m-1;
-            for(int i = n-1; i >= 0; i--) {
+            for(int i = n-1; i >= minCrane; i--) {
                 for(int j = idx; j >= 0; j--) {
                     if(crane[i] >= box[j] && !check[j]) {
                         check[j] = true;
@@ -38,6 +39,8 @@ class Main {
                         count++;
                         break;
                     }
+                    if(j == 0)
+                        minCrane = i+1;
                 }
             }
             result++;
