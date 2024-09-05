@@ -5,20 +5,8 @@ class Solution {
     public int[] solution(int n, int[] info) {
         
         func(0, n, info, new int[11], 0);
-        boolean check = false;
-        for(int i = 0; i < 10; i++) {
-            if(answer[i] != 0) {
-                check = true;
-                break;
-            }
-        }
-        if(check)
-            return answer;
-        else {
-            answer = new int[1];
-            answer[0] = -1;
-            return answer;
-        }
+        
+        return sum == 0 ? new int[] {-1} : answer;
     }
     
     static void func(int count, int n, int[] info, int[] rion, int idx) {
@@ -53,11 +41,11 @@ class Solution {
                             return;
                     }
                 }
+                
                 for(int i = 0; i < 10; i++)
                     answer[i] = rion[i];
                 answer[idx] = n - count;
                 sum = rionSum - apichSum;
-                
             }
             return;
         }
