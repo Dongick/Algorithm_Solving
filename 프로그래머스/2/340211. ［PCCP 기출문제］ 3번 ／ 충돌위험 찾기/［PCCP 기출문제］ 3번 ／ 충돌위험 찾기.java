@@ -1,9 +1,10 @@
+import java.util.*;
+
 class Solution {
     public int solution(int[][] points, int[][] routes) {
         int answer = 0;
-        int n = points.length;
-        int m = routes[0].length;
         int x = routes.length;
+        int m = routes[0].length;
         int[][] arr = new int[x][2];
         int[] num = new int[x];
         boolean[] check = new boolean[x];
@@ -50,39 +51,24 @@ class Solution {
     
     static int func(int[][] arr, boolean[] check, int x) {
         int count = 0;
-        int visit = 0;
         
-        boolean[] visited = new boolean[x];
+        Map<List<Integer>, Integer> map = new HashMap<>();
         for(int i = 0; i < x; i++) {
-            if(check[i]) {
-                visit++;
-                visited[i] = true;
+            if(!check[i]) {
+                List<Integer> list = new ArrayList<>();
+                list.add(arr[i][0]);
+                list.add(arr[i][1]);
+
+                if(map.containsKey(list)) {
+                    int num = map.get(list);
+                    map.replace(list, num + 1);
+                } else
+                    map.put(list, 1);
             }
         }
         
-        while(visit < x) {
-            boolean countCheck = false;
-            int[] num = new int[2];
-            
-            for(int i = 0; i < x; i++) {
-                if(!visited[i]) {
-                    num = arr[i];
-                    visited[i] = true;
-                    visit++;
-                    break;
-                }
-            }
-            
-            for(int i = 0; i < x; i++) {
-                if(visited[i])
-                    continue;
-                if(num[0] == arr[i][0] && num[1] == arr[i][1]) {
-                    visited[i] = true;
-                    visit++;
-                    countCheck = true;
-                }
-            }
-            if(countCheck)
+        for(List<Integer> key : map.keySet()) {
+            if(map.get(key) > 1)
                 count++;
         }
         return count;
