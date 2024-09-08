@@ -3,7 +3,7 @@ class Solution {
         int answer = 0;
         String[] arr = Integer.toString(n, k).split("0");
         for(String s : arr) {
-            if(s.equals(""))
+            if(s.length() == 0)
                 continue;
             if(func(Long.parseLong(s)))
                 answer++;
