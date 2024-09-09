@@ -35,22 +35,16 @@ class Solution {
         });
         
         String[] answer = new String[(int)(maxY - minY) + 1];
-        int idx = 0;
-        long[] duplCheck = new long[2];
-        for(long i = maxY; i >= minY; i--) {
-            answer[(int)(maxY - i)] = "";
-            for(long j = minX; j <= maxX; j++) {
-                if(idx < list.size() && list.get(idx)[0] == j && list.get(idx)[1] == i) {
-                    answer[(int)(maxY - i)] += "*";
-                    duplCheck[0] = j;
-                    duplCheck[1] = i;
-                    idx++;
-                    while(idx < list.size() && duplCheck[0] == list.get(idx)[0] && duplCheck[1] == list.get(idx)[1])
-                        idx++;
-                } else
-                    answer[(int)(maxY - i)] += ".";
-            }
+        for(int i = 0; i <= maxY - minY; i++)
+            answer[i] = ".".repeat((int)(maxX - minX) + 1);
+        
+        StringBuilder sb;
+        for(long[] num : list) {
+            sb = new StringBuilder(answer[(int)(Math.abs(num[1] - maxY))]);
+            sb.setCharAt((int)(num[0] - minX), '*');
+            answer[(int)(Math.abs(num[1] - maxY))] = sb.toString();
         }
+        
         return answer;
     }
 }
