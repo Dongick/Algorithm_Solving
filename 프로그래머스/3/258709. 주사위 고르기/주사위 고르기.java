@@ -36,35 +36,28 @@ class Solution {
             Collections.sort(bKeySet);
             
             int aWin = 0;
-            int bWin = 0;
             int a = 0;
             int b = 0;
-            int aSum = 0;
             int bSum = 0;
+            int draw = 0;
             while(a != aKeySet.size() && b != bKeySet.size()) {
                 if(aKeySet.get(a) > bKeySet.get(b)) {
                     aWin += bMap.get(bKeySet.get(b)) * aMap.get(aKeySet.get(a));
                     bSum += bMap.get(bKeySet.get(b));
                     b++;
-                    if(b != bKeySet.size())
-                        bWin += aSum * bMap.get(bKeySet.get(b));
                     
                 } else if(aKeySet.get(a) < bKeySet.get(b)) {
-                    bWin += aMap.get(aKeySet.get(a)) * bMap.get(bKeySet.get(b));
-                    aSum += aMap.get(aKeySet.get(a));
                     a++;
                     if(a != aKeySet.size())
                         aWin += bSum * aMap.get(aKeySet.get(a));
                     
                 } else {
+                    draw += aMap.get(aKeySet.get(a)) * bMap.get(bKeySet.get(b));
                     bSum += bMap.get(bKeySet.get(b));
-                    aSum += aMap.get(aKeySet.get(a));
                     a++;
                     b++;
                     if(a != aKeySet.size())
                         aWin += bSum * aMap.get(aKeySet.get(a));
-                    if(b != bKeySet.size())
-                        bWin += aSum * bMap.get(bKeySet.get(b));
                 }
             }
             
@@ -72,11 +65,9 @@ class Solution {
                 for(int i = a + 1; i < aKeySet.size(); i++) {
                     aWin += bSum * aMap.get(aKeySet.get(i));
                 }
-            } else {
-                for(int i = b + 1; i < bKeySet.size(); i++) {
-                    bWin += aSum * bMap.get(bKeySet.get(i));
-                }
             }
+            
+            int bWin = (int)Math.pow(6, n) - aWin - draw;
             
             if(aWin > bWin) {
                 if(winner < aWin) {
