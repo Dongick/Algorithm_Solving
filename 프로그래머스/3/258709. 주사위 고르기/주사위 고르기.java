@@ -15,13 +15,13 @@ class Solution {
         boolean[] visited = new boolean[n];
         visited[0] = true;
         
-        func(0, visited, dice);
+        func(1, visited, dice, 1);
         int[] answer = winnerArr;
         return answer;
     }
     
-    static void func(int count, boolean[] visited, int[][] dice) {
-        if(count == (n - 1) / 2) {
+    static void func(int count, boolean[] visited, int[][] dice, int idx) {
+        if(count == n / 2) {
             aMap = new HashMap<>();
             bMap = new HashMap<>();
             
@@ -55,6 +55,7 @@ class Solution {
                     a++;
                     if(a != aKeySet.size())
                         aWin += bSum * aMap.get(aKeySet.get(a));
+                    
                 } else {
                     bSum += bMap.get(bKeySet.get(b));
                     aSum += aMap.get(aKeySet.get(a));
@@ -104,10 +105,10 @@ class Solution {
             return;
         }
         
-        for(int i = 0; i < n; i++) {
+        for(int i = idx; i < n; i++) {
             if(!visited[i]) {
                 visited[i] = true;
-                func(count+1, visited, dice);
+                func(count+1, visited, dice, i + 1);
                 visited[i] = false;
             }
         }
