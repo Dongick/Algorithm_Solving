@@ -20,56 +20,23 @@ class Solution {
             arr[cards[idx]] = 2;
             arr[cards[idx+1]] = 2;
             
-            boolean check = false;
-            for(int i = 1; i <= n; i++) {
-                if(arr[i] == 1 && arr[n-i+1] == 1) {
-                    arr[i] = 0;
-                    arr[n-i+1] = 0;
-                    check = true;
-                    break;
-                }
-            }
-            if(check) {
-                idx += 2;
-                round++;
-                continue;
-            }
-            
-            if(coin >= 1) {
-                for(int i = 1; i <= n; i++) {
-                    if((arr[i] == 1 && arr[n-i+1] == 2) || (arr[i] == 2 && arr[n-i+1] == 1)) {
-                        arr[i] = 0;
-                        arr[n-i+1] = 0;
-                        check = true;
-                        coin--;
-                        break;
+            int min = 3;
+            int minIdx = 0;
+            for(int i = 1; i <= n/2; i++) {
+                if(arr[i] != 0 && arr[n-i+1] != 0) {
+                    if(min > arr[i] + arr[n-i+1] - 2) {
+                        min = arr[i] + arr[n-i+1] - 2;
+                        minIdx = i;
                     }
                 }
-                if(check) {
-                    idx += 2;
-                    round++;
-                    continue;
-                }
             }
-            
-            if(coin >= 2) {
-                for(int i = 1; i <= n; i++) {
-                    if((arr[i] == 2 && arr[n-i+1] == 2)) {
-                        arr[i] = 0;
-                        arr[n-i+1] = 0;
-                        check = true;
-                        coin -= 2;
-                        break;
-                    }
-                }
-                if(check) {
-                    idx += 2;
-                    round++;
-                    continue;
-                }
-            }
-            
-            return round;
+            if(min == 3 || coin < min)
+                break;
+            arr[minIdx] = 0;
+            arr[n-minIdx+1] = 0;
+            round++;
+            coin -= min;
+            idx += 2;
         }
         return round;
     }
