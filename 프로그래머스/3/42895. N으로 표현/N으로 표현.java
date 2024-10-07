@@ -14,47 +14,16 @@ class Solution {
         visited[N] = true;
         
         for(int i = 2; i <= 8; i++) {
-            String s = Integer.toString(N).repeat(i);
-            if(Integer.parseInt(s) <= max) {
-                visited[Integer.parseInt(s)] = true;
-                list.get(i).add(Integer.parseInt(s));
-                if(Integer.parseInt(s) == number)
-                    return i;
-            }
-                
             int lo = 1;
             int hi = i - 1;
             while(lo <= hi) {
                 for(int num1 : list.get(lo)) {
                     for(int num2 : list.get(hi)) {
-                        int num = num1+num2;
-                        if(!visited[num]) {
-                            list.get(i).add(num);
-                            visited[num] = true;
-                            if(num == number)
-                                return i;
-                        }
-                        num = Math.abs(num1-num2);
-                        if(!visited[num]) {
-                            list.get(i).add(num);
-                            visited[num] = true;
-                            if(num == number)
-                                return i;
-                        }
-                        num = num1*num2;
-                        if(num <= max && !visited[num]) {
-                            list.get(i).add(num);
-                            visited[num] = true;
-                            if(num == number)
-                                return i;
-                        }
-                        if(num1 != 0 && num2 != 0) {
-                            num = Math.max(num1, num2) / Math.min(num1, num2);
-                            if(!visited[num]) {
-                                list.get(i).add(num);
-                                visited[num] = true;
-                                if(num == number)
-                                    return i;
+                        int[] num = {num1+num2, Math.abs(num1-num2), num1*num2, Math.max(num1, num2) / Math.min(num1, num2), Integer.parseInt(Integer.toString(N).repeat(i))};
+                        for(int j = 0; j < 5; j++) {
+                            if(num[j] != 0 && num[j] <= max && !visited[num[j]]) {
+                                list.get(i).add(num[j]);
+                                visited[num[j]] = true;
                             }
                         }
                     }
@@ -62,6 +31,8 @@ class Solution {
                 hi--;
                 lo++;
             }
+            if(list.get(i).contains(number))
+                return i;
         }
         
         return -1;
